@@ -1,83 +1,98 @@
-<div align="center">
-  <img src="docs/assets/logo.svg" alt="BrandMuse" width="320">
-  <p><strong>AI-Powered Brand Voice Management & Content Intelligence</strong></p>
-  <p>Brand voice analysis · multi-channel content generation · compliance auditing · tone optimization</p>
+[![CI](https://github.com/Crynge/BrandMuse/actions/workflows/ci.yml/badge.svg)](https://github.com/Crynge/BrandMuse/actions/workflows/ci.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6)](https://typescriptlang.org)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB)](https://python.org)
 
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.4%2B-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-  [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://python.org)
-  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-  [![CI](https://github.com/Crynge/BrandMuse/actions/workflows/ci.yml/badge.svg)](https://github.com/Crynge/BrandMuse/actions/workflows/ci.yml)
-  [![Code style: prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-  [![GitHub Stars](https://img.shields.io/github/stars/Crynge/BrandMuse?style=social)](https://github.com/Crynge/BrandMuse)
+# BrandMuse
 
-</div>
+**AI brand voice management & content intelligence.**
+
+Ensure every piece of content speaks in your brand's voice — consistently, authentically, and at scale. BrandMuse analyzes tone, generates on-brand copy, and audits content against your brand guidelines.
 
 ---
 
-## Overview
-
-BrandMuse is an AI brand voice platform that helps marketing teams maintain consistent, on-brand communication across every channel. It analyzes existing content to extract brand voice DNA, generates on-brand copy, audits content for voice compliance, and suggests tonal adjustments.
-
-## Key Features
-
-- **Voice DNA extraction** — Analyzes existing content to build a brand voice fingerprint
-- **Multi-channel generation** — Creates on-brand content for web, email, social, ads, docs
-- **Tone optimization** — Adjusts tone for context while maintaining brand consistency
-- **Compliance auditing** — Scans content for brand voice violations and inconsistencies
-- **Competitor voice analysis** — Benchmarks your brand voice against competitors
-
-## Architecture
+## Brand Voice Profile
 
 ```
-Brand Samples → VoiceDNA (extractor) → ContentGenerator → ChannelAdapter
-                                         → ComplianceAuditor   → ToneOptimizer
-                                           → Unified Brand Dashboard
+◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+│                     VOICE PROFILE                            │
+│━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ │
+│                                                              │
+│  Brand:      Acme Corp                                       │
+│  Tone:       Professional · Approachable · Innovative       │
+│  Vocabulary: Industry terms · Avoid jargon                   │
+│  Formality:  7/10 (formal but not stiff)                     │
+│  Emotion:    Optimistic · Authoritative                      │
+│  Audience:   CTOs and engineering leaders                    │
+│                                                              │
+|  Consistency Score: ████████░░ 82%  (needs improvement)     |
+|                                                              |
+◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 ```
 
-## Quick Start
+## Features
 
-```bash
-npm install
-npx tsx src/api/server.ts
-```
-
-## Installation
-
-```bash
-git clone https://github.com/Crynge/BrandMuse.git
-cd BrandMuse
-npm install
-pip install -e ".[dev]"
-```
+- **Voice Analysis** — Scores tone, formality, emotion, and vocabulary against brand guidelines
+- **Content Generation** — Writes blog posts, social copy, and emails in your brand voice
+- **Consistency Audit** — Scans existing content library for voice deviations
+- **Multi-language** — Maintains brand voice across English, Spanish, French, and German
+- **API-first** — Integrate with CMS platforms, email tools, and social schedulers
 
 ## Usage
 
-```typescript
-import { BrandMuse } from './src/core/voice';
+```bash
+npm install @crynge/brandmuse
 
-const muse = new BrandMuse({
-  brandName: 'Acme Corp',
-  samples: ['./samples/brand-voice.txt', './samples/past-emails'],
-});
+# Analyze a piece of content
+npx brandmuse analyze --content "Check out our latest product!" --profile acme
 
-const dna = await muse.extractVoiceDNA();
-// { formality: 0.75, humor: 0.2, enthusiasm: 0.6, expertise: 0.9, ... }
-
-const post = await muse.generate({
-  channel: 'twitter',
-  topic: 'New product launch',
-  keyMessage: 'Faster than ever',
-  cta: 'Learn more',
-});
-// "Introducing the fastest Acme ever built. 3x speed. 0 compromises. See what's new →"
+# Generate on-brand copy
+npx brandmuse generate --brief "Launch email for v2.0" --tone professional
 ```
 
-## Components
+```typescript
+import { VoiceAnalyzer } from '@crynge/brandmuse/core/voice';
 
-| Component | Lang | Role |
-|-----------|------|------|
-| VoiceDNA | TS | Extracts brand voice fingerprint from samples |
-| ContentGenerator | TS | Generates on-brand content per channel |
-| ComplianceAuditor | TS | Checks content against brand voice rules |
-| ToneAnalyzer | Py | NLP tone analysis and scoring |
-| ConsistencyChecker | Py | Cross-channel consistency validation |
+const analyzer = new VoiceAnalyzer({
+  profile: {
+    tone: ['professional', 'approachable'],
+    formality: 0.7,
+    vocabulary: ['ROI', 'scalable', 'enterprise'],
+    disallowed: ['synergy', 'game-changer'],
+  },
+});
+
+const result = await analyzer.analyze(
+  "Our platform helps enterprises scale their infrastructure."
+);
+console.log(result.toneScore);     // 0.88
+console.log(result.formalityFit);  // 0.92
+console.log(result.violations);    // []
+```
+
+## Tone Analyzer (Python)
+
+```python
+from brandmuse.analyzers.tone import ToneAnalyzer
+
+analyzer = ToneAnalyzer()
+scores = analyzer.analyze("We're revolutionizing the industry with AI.")
+
+print(scores.formality)     # 0.45
+print(scores.enthusiasm)    # 0.82
+print(scores.authority)     # 0.65
+```
+
+## Modules
+
+```
+src/
+├── core/
+│   ├── voice.ts        # Voice profile matching engine
+│   ├── auditor.ts      # Bulk content auditing
+│   └── generator.ts    # On-brand content generation
+├── analyzers/
+│   ├── tone.py         # Tone classification (Python)
+│   └── consistency.py  # Cross-document consistency checks
+└── api/
+    └── server.ts       # REST API server
+```
